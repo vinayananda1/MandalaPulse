@@ -26,12 +26,17 @@
       margin-top: 10px;
       color: #444;
     }
+    .highlight {
+      font-weight: bold;
+      color: #007700;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>🌸 Welcome to MandalaPulse</h2>
-    <p class="message">Your invocation has been received and logged.</p>
+    <p class="message" id="affirmation">Your invocation has been received and logged.</p>
+    <div id="details" class="message"></div>
   </div>
 
   <!-- Ambient Sound Lineage -->
@@ -39,5 +44,25 @@
     <source src="https://vinayananda1.github.io/MandalaPulse/I%20Will%20Be%20There%20Always.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+
+  <script>
+    // 🌸 Parse query parameters
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get('username');
+    const role = params.get('role');
+    const code = params.get('code');
+    const approved = params.get('approved');
+
+    // 🌸 Display symbolic invocation details
+    const detailsBox = document.getElementById('details');
+    if (username && role && code && approved) {
+      detailsBox.innerHTML = `
+        <div>Seeker: <span class="highlight">${username}</span></div>
+        <div>Role: <span class="highlight">${role}</span></div>
+        <div>Invocation Code: <span class="highlight">${code}</span></div>
+        <div>Approved By: <span class="highlight">${approved}</span></div>
+      `;
+    }
+  </script>
 </body>
 </html>
