@@ -1,68 +1,83 @@
-<!-- 🪷 login.html: Ritual Entry Scroll -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Mandala Login</title>
-  <style>
-    body {
-      background-color: #fdf6e3; /* Cream tone */
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .login-box {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-box">
-    <h2>🪷 Welcome to Mandala Pulse</h2>
-    <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter your email">
-
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Enter your password">
-
-    <button onclick="login()">Enter</button>
-  </div>
-
-  <script>
-    function login() {
-      // Placeholder logic — later we'll fetch from Google Sheets
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      if (email && password) {
-        window.location.href = 'welcome.html'; // Route to next chamber
-      } else {
-        alert('Please enter both email and password.');
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f0fff0;
+        text-align: center;
+        padding-top: 80px;
+        margin: 0;
       }
-    }
-  </script>
-</body>
+      h2 {
+        color: #006600;
+        margin-bottom: 20px;
+      }
+      #status {
+        font-size: 16px;
+        color: #444;
+        margin-top: 10px;
+      }
+      #countdown {
+        font-size: 24px;
+        color: #003300;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="greeting">🌼 Welcome</h2>
+    <p id="status">🕊️ Preparing MandalaPulse...</p>
+    <p id="countdown">⏳ 5</p>
+
+    <!-- 🎶 Ambient music -->
+<audio autoplay loop>
+  <source src="https://raw.githubusercontent.com/vinayananda1/MandalaPulse/main/02%20I%20Will%20Be%20Thine%20Always.mp3" type="audio/mpeg">
+  Your browser does not support the audio element or the file is unavailable.
+</audio>
+ 
+    
+
+    <script>
+      const username = "<?= username ?>";
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (!username) {
+          document.getElementById("greeting").textContent = "🛑 No username provided.";
+          document.getElementById("status").textContent = "";
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(function(profile) {
+            if (profile) {
+              const fullName = profile.fullName || username;
+              const title = profile.title ? profile.title + " " : "";
+              const status = profile.status || "Unknown";
+
+              document.getElementById("greeting").textContent = `🌼 Welcome, ${title}${fullName}`;
+              document.getElementById("status").textContent = `🕊️ Status: ${status}`;
+            } else {
+              document.getElementById("greeting").textContent = `🌼 Welcome, ${username}`;
+              document.getElementById("status").textContent = `🕊️ Profile not found`;
+            }
+          })
+          .getProfile(username);
+
+        // ⏳ Countdown and redirect
+        let seconds = 5;
+        const countdown = document.getElementById("countdown");
+        const interval = setInterval(() => {
+          seconds--;
+          countdown.textContent = `⏳ ${seconds}`;
+          if (seconds === 0) {
+            clearInterval(interval);
+            const baseUrl = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+            window.location.href = `${baseUrl}?view=q&user=${encodeURIComponent(username)}`;
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
 </html>
