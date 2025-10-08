@@ -89,7 +89,7 @@
           user.password === password
         );
 
-       const role = match.role?.toLowerCase();
+      const role = match.role?.toLowerCase();
 let url = '';
 
 if (role === 'guest') {
@@ -99,6 +99,10 @@ if (role === 'guest') {
 } else {
   url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}&name=${encodeURIComponent(match.fullName)}`;
 }
+
+setTimeout(() => {
+  window.location.href = url;
+}, 1500);
 
 setTimeout(() => {
   window.location.href = url;
