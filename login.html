@@ -92,7 +92,7 @@
         if (match) {
           messageBox.textContent = `Welcome, ${match.role}. Breath restored.`;
           messageBox.classList.add('success');
-
+         
           // 🌼 Pass invocation data to welcome.html
           const url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}`;
           setTimeout(() => {
