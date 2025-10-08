@@ -1,0 +1,19 @@
+
+<script>
+  // Extract username from URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const username = urlParams.get("user");
+  const password = "auto"; // symbolic password or backend lookup
+
+  if (username) {
+    google.script.run.withSuccessHandler(function(response) {
+      if (response.success) {
+        window.location.href = "https://script.google.com/macros/s/AKfycbzwhK7kfHuRVJ7xr73RGrxwEhdpRwmdwjM5gISVrk3uTOW8-yEn93WmZb6s9P8DZSFeUw/exec?view=" + response.role;
+      } else {
+        alert("🛑 Auto-login failed");
+      }
+    }).validateUser({ username, password });
+  } else {
+    alert("🛑 No user parameter found in URL");
+  }
+</script>
