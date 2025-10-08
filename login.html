@@ -25,6 +25,11 @@
       color: green;
       font-weight: bold;
     }
+    #timestamp {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -43,56 +48,3 @@
   <p id="timestamp"></p>
 
   <audio autoplay loop>
-    <source src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/sound.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <script>
-    let seekers = [];
-
-    // 🌼 Fetch seeker data from Google Sheet
-    fetch("https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec")
-      .then(response => response.json())
-      .then(data => {
-        seekers = data;
-        console.log("Seeker data received:", seekers);
-      })
-      .catch(error => {
-        console.error("Error fetching seeker data:", error);
-      });
-
-    // 🛡️ Validate login and route by role
-    function validateLogin() {
-      const usernameInput = document.getElementById("username").value.trim();
-      const passwordInput = document.getElementById("password").value.trim();
-
-      const match = seekers.find(s => s.username === usernameInput && s.password === passwordInput);
-
-      if (match) {
-        const role = match.role?.toLowerCase();
-        let url = '';
-
-        if (role === 'guest') {
-          url = `guest.html?name=${encodeURIComponent(match.fullName)}&email=${encodeURIComponent(match.email || '')}`;
-        } else if (role === 'admin') {
-          url = `admin.html?username=${encodeURIComponent(match.username)}&name=${encodeURIComponent(match.fullName)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}`;
-        } else {
-          url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}&name=${encodeURIComponent(match.fullName)}`;
-        }
-
-        document.getElementById("loginStatus").textContent = `Invocation accepted for ${match.fullName} (${match.role})`;
-
-        setTimeout(() => {
-          window.location.href = url;
-        }, 1500);
-      } else {
-        document.getElementById("loginStatus").textContent = "Invalid credentials. Please try again.";
-      }
-    }
-
-    // 🌸 Display IST timestamp
-    const now = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-    document.getElementById("timestamp").textContent = `🕰️ Invocation Time (IST): ${now}`;
-  </script>
-</body>
-</html>
