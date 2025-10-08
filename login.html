@@ -1,4 +1,4 @@
-<!-- 🪷 login.html: Unified Invocation Scroll -->
+<!-- 🪷 login.html: Invocation Scroll -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +68,7 @@
 
   <script>
     async function login() {
-      const url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}&name=${encodeURIComponent(match.fullName)}`; username = document.getElementById('username').value.trim();
+      const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
       const messageBox = document.getElementById('message');
       messageBox.textContent = '';
@@ -81,25 +81,24 @@
       }
 
       try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbz8RhhMudndx5gMCsqLtJgTDi72jtWXvtRd1syVWCu5LBc_JLNTMYeRZRM3YZNCBYnfYw/exec");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbz8RhhMudndx5gMCsqLtJgTDi72jtWXvtRd1syVWCu5LBc_JLNTMYeRZRM3YZNCBYnfYw/exec");
         const users = await response.json();
 
         const match = users.find(user =>
-          user.username.toLowerCase() === username.toLowerCase() &&
+          user.username?.toLowerCase() === username.toLowerCase() &&
           user.password === password
         );
 
         if (match) {
           messageBox.textContent = `Welcome, ${match.role}. Breath restored.`;
           messageBox.classList.add('success');
-         
-          // 🌼 Pass invocation data to welcome.html
-          const url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}`;
+
+          const url = `welcome.html?username=${encodeURIComponent(match.username)}&role=${encodeURIComponent(match.role)}&code=${encodeURIComponent(match.invocationCode)}&approved=${encodeURIComponent(match.approvedBy)}&name=${encodeURIComponent(match.fullName)}`;
           setTimeout(() => {
             window.location.href = url;
           }, 1500);
         } else {
-          messageBox.textContent = 'Invalid credentials. Please try again.';
+          messageBox.textContent = 'No data found. Please check your credentials.';
           messageBox.classList.add('error');
         }
       } catch (error) {
