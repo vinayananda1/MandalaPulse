@@ -1,20 +1,69 @@
+<!-- Invocation Scroll: guest.html -->
+<!-- Purpose: Guest form for admin confirmation -->
+<!-- Compatibility: Modern browsers -->
+<!-- Lineage: Routes to admin via email or Google Sheet -->
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-    <style>
-      body {
-        font-family: sans-serif;
-        background-color: #f0f0f0;
-        text-align: center;
-        padding-top: 80px;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>🌫️ Guest Chamber</h2>
-    <p>Welcome, <strong>Visitor Guest</strong>.</p>
-    <p>Your access is temporary. Please follow the walkthrough instructions.</p>
-    <p>For full invocation, contact your guide or submit a request.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Entry — MandalaPulse</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #eef2f3;
+      text-align: center;
+      padding: 50px;
+    }
+    .form-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      margin: 10px;
+      padding: 8px;
+      width: 80%;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2>Welcome, Guest</h2>
+    <p>Please fill the form to request meeting access</p>
+    <form id="guestForm">
+      <input type="text" id="guestName" placeholder="Your Name" required><br>
+      <input type="password" id="guestPassword" placeholder="Password" required><br>
+      <input type="email" id="guestEmail" placeholder="Email Address" required><br>
+      <input type="text" id="guestAddress" placeholder="Address" required><br>
+      <input type="text" id="guestPlace" placeholder="Place" required><br>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="confirmationMessage" style="color: green;"></p>
+  </div>
+
+  <script>
+    document.getElementById("guestForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("guestName").value;
+      const email = document.getElementById("guestEmail").value;
+
+      // Symbolic confirmation (manual phase)
+      document.getElementById("confirmationMessage").innerText =
+        "Thank you, " + name + ". Your request has been sent to the admin.";
+
+      // Later: Send to Google Sheet or trigger code.gs
+    });
+  </script>
+</body>
 </html>
