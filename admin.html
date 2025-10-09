@@ -1,57 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>🛡️ Admin Chamber</title>
+  <title>MandalaPulse Admin</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fffbe6;
-      text-align: center;
-      padding-top: 60px;
+      background: linear-gradient(to right, #fff3e0, #fff);
+      padding: 40px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff8e1;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h2 {
-      color: #333;
+      color: #6d4c41;
     }
     .info {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #444;
+      margin-bottom: 20px;
+      font-size: 16px;
     }
-    #timestamp {
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #8d6e63;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
       margin-top: 10px;
-      font-style: italic;
-      color: #777;
+    }
+    .button:hover {
+      background-color: #5d4037;
     }
   </style>
 </head>
 <body>
-  <h2>🛡️ Admin Chamber Invoked</h2>
-
-  <div class="info" id="adminInfo"></div>
-  <p id="timestamp"></p>
-
- <audio autoplay loop>
-  <source src="https://raw.githubusercontent.com/vinayananda1/mandalaasset/main/Do%20I%20Will%20Be%20Thine%20Always.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+  <div class="container">
+    <h2>🌼 Welcome, Admin</h2>
+    <div class="info">
+      <p><strong>Username:</strong> <span id="username"></span></p>
+      <p><strong>Invocation Code:</strong> <span id="code"></span></p>
+      <p><strong>Approved By:</strong> <span id="approved"></span></p>
+    </div>
+    <a href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit" class="button">📝 Manage Users</a>
+    <a href="https://github.com/vinayananda1/MandalaPulse" class="button">📜 View Scrolls</a>
+    <a href="q.html" class="button">🔮 Enter Next Chamber</a>
+  </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const username = params.get("username");
-    const name = params.get("name");
-    const code = params.get("code");
-    const approved = params.get("approved");
-
-    document.getElementById("adminInfo").innerHTML = `
-      <strong>Welcome, ${name}</strong><br>
-      🧙‍♂️ Username: ${username}<br>
-      🪄 Invocation Code: ${code}<br>
-      ✅ Approved By: ${approved}
-    `;
-
-    const now = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-    document.getElementById("timestamp").textContent = `🕰️ Invocation Time (IST): ${now}`;
+    document.getElementById("username").textContent = params.get("username");
+    document.getElementById("code").textContent = params.get("code");
+    document.getElementById("approved").textContent = params.get("approved");
   </script>
 </body>
 </html>
