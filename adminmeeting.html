@@ -2,88 +2,59 @@
 <html>
 <head>
   <title>🔮 Admin Meeting Chamber</title>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background-color: #f0f0f0; }
-    input, button { margin-top: 10px; padding: 6px; }
-  </style>
-  <script>
-
-    function submitMeeting() {
-  const meetingData = {
-    Date: document.getElementById("date").value.trim(),
-    Time: document.getElementById("time").value.trim(),
-    Topic: document.getElementById("topic").value.trim(),
-    Host: document.getElementById("host").value.trim()
-  };
-
-  // Basic validation
-  if (!meetingData.Date || !meetingData.Time || !meetingData.Topic || !meetingData.Host) {
-    document.getElementById("status").innerText = "🛑 Please fill all fields.";
-    return;
-  }
-
-  google.script.run.withSuccessHandler(function(response) {
-    document.getElementById("status").innerText = response;
-  }).sendMeetingEmail(meetingData);
-}
-    function renderMeetings(meetings) {
-      const table = document.getElementById("meetingTable");
-      table.innerHTML = "<tr><th>Date</th><th>Time</th><th>Topic</th><th>Host</th><th>Actions</th></tr>";
-
-      meetings.forEach(m => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${m.Date || ""}</td>
-          <td>${m.Time || ""}</td>
-          <td>${m.Topic || ""}</td>
-          <td>${m.Host || ""}</td>
-          <td>
-            <button onclick="editMeeting(${m.rowIndex})">✏️ Edit</button>
-            <button onclick="deleteMeeting(${m.rowIndex})">🗑️ Delete</button>
-          </td>
-        `;
-        table.appendChild(row);
-
-        <h3>➕ Schedule New Meeting</h3>
-
-<label>Date</label>
-<input type="date" id="date">
-
-<label>Time</label>
-<input type="time" id="time">
-
-<label>Topic</label>
-<input type="text" id="topic" placeholder="e.g., Invocation Rituals">
-
-<label>Host</label>
-<input type="text" id="host" placeholder="e.g., Swami Vinayananda">
-
-<button onclick="submitMeeting()">📧 Schedule & Send Email</button>
-
-<div id="status"></div>
-      });
-    }
-
-    function editMeeting(rowIndex) {
-      alert("Edit meeting at row " + rowIndex);
-    }
-
-    function deleteMeeting(rowIndex) {
-      alert("Delete meeting at row " + rowIndex);
-    }
-
-    window.onload = google.script.run.withSuccessHandler(function(response) {
-  document.getElementById("status").innerText = response;
-}).sendMeetingEmail(meetingData);function() {
-      google.script.run.withSuccessHandler(renderMeetings).getAllMeetings();
-    };
-  </script>
 </head>
 <body>
   <h2>🔮 Admin Meeting Chamber</h2>
-  <table id="meetingTable"></table>
+
+  <label for="date">📅 Date:</label>
+  <input type="date" id="date"><br><br>
+
+  <label for="time">🕰️ Time:</label>
+  <input type="time" id="time"><br><br>
+
+  <label for="topic">🧭 Topic:</label>
+  <input type="text" id="topic" placeholder="Enter topic"><br><br>
+
+  <label for="host">🧘 Host:</label>
+  <input type="text" id="host" placeholder="Enter host name"><br><br>
+
+  <button onclick="submitMeeting()">➕ Add Meeting</button>
+
+  <p id="status">🧘 Awaiting invocation…</p>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; // 🔗 Replace with your Web App URL
+
+    function submitMeeting() {
+      const meetingData = {
+        Date: document.getElementById("date").value,
+        Time: document.getElementById("time").value,
+        Topic: document.getElementById("topic").value.trim(),
+        Host: document.getElementById("host").value.trim()
+      };
+
+      if (!meetingData.Date || !meetingData.Time || !meetingData.Topic || !meetingData.Host) {
+        document.getElementById("status").innerText = "🛑 Please fill all fields.";
+        return;
+      }
+
+      document.getElementById("status").innerText = "🔄 Sending meeting data…";
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(meetingData),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("status").innerText = text;
+      })
+      .catch(error => {
+        document.getElementById("status").innerText = "🛑 Invocation failed: " + error;
+      });
+    }
+  </script>
 </body>
 </html>
