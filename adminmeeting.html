@@ -10,6 +10,25 @@
     input, button { margin-top: 10px; padding: 6px; }
   </style>
   <script>
+
+    function submitMeeting() {
+  const meetingData = {
+    Date: document.getElementById("date").value.trim(),
+    Time: document.getElementById("time").value.trim(),
+    Topic: document.getElementById("topic").value.trim(),
+    Host: document.getElementById("host").value.trim()
+  };
+
+  // Basic validation
+  if (!meetingData.Date || !meetingData.Time || !meetingData.Topic || !meetingData.Host) {
+    document.getElementById("status").innerText = "🛑 Please fill all fields.";
+    return;
+  }
+
+  google.script.run.withSuccessHandler(function(response) {
+    document.getElementById("status").innerText = response;
+  }).sendMeetingEmail(meetingData);
+}
     function renderMeetings(meetings) {
       const table = document.getElementById("meetingTable");
       table.innerHTML = "<tr><th>Date</th><th>Time</th><th>Topic</th><th>Host</th><th>Actions</th></tr>";
