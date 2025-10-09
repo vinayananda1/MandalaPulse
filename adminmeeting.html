@@ -38,7 +38,9 @@
       alert("Delete meeting at row " + rowIndex);
     }
 
-    window.onload = function() {
+    window.onload = google.script.run.withSuccessHandler(function(response) {
+  document.getElementById("status").innerText = response;
+}).sendMeetingEmail(meetingData);function() {
       google.script.run.withSuccessHandler(renderMeetings).getAllMeetings();
     };
   </script>
