@@ -1,24 +1,39 @@
-<script>
-  // 🌼 Extract username from URL parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get("user");
-  const password = "auto"; // symbolic password or backend lookup
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MandalaPulse Auto Login</title>
+</head>
+<body>
+  <h2>🌼 MandalaPulse Auto Login Ritual</h2>
+  <p id="status">🔍 Preparing invocation…</p>
 
-  if (email) {
-    // 🧘 Invoke backend validation
-    google.script.run.withSuccessHandler(function(response) {
-      if (response.status === "✅") {
-        const role = response.role;
-        const username = response.name;
-        const code = Date.now(); // symbolic invocation code
+  <script>
+    // 🌼 Extract username from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("user");
+    const password = "auto"; // symbolic password or backend lookup
 
-        // 🌐 Redirect to admin.html with lineage
-        window.location.href = `admin.html?username=${username}&role=${role}&code=${code}`;
-      } else {
-        alert("🛑 Auto-login failed: " + response.status);
-      }
-    }).validate(email, password);
-  } else {
-    alert("🛑 No user parameter found in URL");
-  }
-</script>
+    if (email) {
+      document.getElementById("status").innerText = `🔐 Validating ${email}…`;
+
+      // 🧘 Invoke backend validation
+      google.script.run.withSuccessHandler(function(response) {
+        if (response.status === "✅") {
+          const role = response.role;
+          const username = response.name;
+          const code = Date.now(); // symbolic invocation code
+
+          document.getElementById("status").innerText = `✅ Welcome ${username} (${role}) — redirecting…`;
+
+          // 🌐 Redirect to admin.html with lineage
+          window.location.href = `admin.html?username=${username}&role=${role}&code=${code}`;
+        } else {
+          document.getElementById("status").innerText = `🛑 Auto-login failed: ${response.status}`;
+        }
+      }).validate(email, password);
+    } else {
+      document.getElementById("status").innerText = "🛑 No user parameter found in URL";
+    }
+  </script>
+</body>
+</html>
