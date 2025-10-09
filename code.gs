@@ -31,9 +31,8 @@ function doGet(e) {
           const name = data[i][0]; // or use FullName from Profiles if needed
 
           const url = role === "admin"
-            ? `https://vinayananda1.github.io/MandalaPulse/admin.html?username=${username}&name=${name}&code=${code}&approved=${approved}`
-            : `https://vinayananda1.github.io/MandalaPulse/guest.html?username=${username}&name=${name}&code=${code}&approved=${approved}`;
-
+  ? `https://vinayananda1.github.io/MandalaPulse/admin.html?username=${username}&name=${name}&code=${code}&approved=${approved}`
+  : ...
           return HtmlService.createHtmlOutput(`<script>window.location='${url}'</script>`);
         }
       }
