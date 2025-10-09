@@ -1,50 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MandalaPulse Login</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #fff);
-      text-align: center;
-      padding-top: 100px;
-    }
-    .login-box {
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: inline-block;
-    }
-    input {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 80%;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #00796b;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #004d40;
-    }
-  </style>
+  <title>MandalaPulse Manual Login</title>
 </head>
 <body>
-  <div class="login-box">
-    <h2>🌼 MandalaPulse Login</h2>
-    <form method="GET" action="https://script.google.com/macros/s/AKfycbwWER1ihzpmt58VRyHu-K8m9AflUOFQ_nnRBYO_SobwxrHk_D-OtAKMaCbAw3ks0uA7uA/exec?view=validate">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
+  <h2>🌼 MandalaPulse Manual Login</h2>
+
+  <label for="email">Email:</label>
+  <input type="text" id="email" placeholder="Enter your email"><br><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" placeholder="Enter password"><br><br>
+
+  <button onclick="invokeLogin()">🔐 Login</button>
+
+  <p id="status">🧘 Awaiting invocation…</p>
+
+  <script>
+    function invokeLogin() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        document.getElementById("status").innerText = "🛑 Please enter both email and password.";
+        return;
+      }
+
+      document.getElementById("status").innerText = `🔍 Validating ${email}…`;
+
+      google.script.run.withSuccessHandler(function(response) {
+        if (response.status === "✅") {
+          const role = response.role;
+          const username = response.name;
+          const code = Date.now();
+
+          document.getElementById("status").innerText = `✅ Welcome ${username} (${role}) — redirecting…`;
+          window.location.href = `admin.html?username=${username}&role=${role}&code=${code}`;
+        } else {
+          document.getElementById("status").innerText = `🛑 Login failed: ${response.status}`;
+        }
+      }).validate(email, password);
+    }
+  </script>
 </body>
 </html>
