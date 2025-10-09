@@ -1,14 +1,49 @@
 // 🌼 Serve seeker data to login.html
 function doGet(e) {
-  const email = e?.parameter?.email;
-  const name = e?.parameter?.name;
+  const view = e && e.parameter && e.parameter.view ? e.parameter.view : "login";
+  const username = e && e.parameter && e.parameter.username ? e.parameter.username : "";
+  const password = e && e.parameter && e.parameter.password ? e.parameter.password : "";
 
-  // 📜 If guest email is submitted, log it
-  if (email && name) {
-    logGuestEmail(email, name);
-    return ContentService.createTextOutput("Guest email logged").setMimeType(ContentService.MimeType.TEXT);
+  switch (view) {
+    case "login":
+      return HtmlService.createHtmlOutputFromFile("login");
+
+    case "welcome":
+      const template = HtmlService.createTemplateFromFile("welcome");
+      template.username = username;
+      return template.evaluate();
+
+    case "admin":
+    case "user":
+    case "guest":
+    case "q":
+      return HtmlService.createHtmlOutputFromFile(view);
+
+    case "validate":
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+      const data = sheet.getDataRange().getValues();
+
+      for (let i = 1; i < data.length; i++) {
+        if (data[i][0] === username && data[i][1] === password) {
+          const role = data[i][2];
+          const code = data[i][4];
+          const approved = data[i][5];
+          const name = data[i][0]; // or use FullName from Profiles if needed
+
+          const url = role === "admin"
+            ? `https://vinayananda1.github.io/MandalaPulse/admin.html?username=${username}&name=${name}&code=${code}&approved=${approved}`
+            : `https://vinayananda1.github.io/MandalaPulse/guest.html?username=${username}&name=${name}&code=${code}&approved=${approved}`;
+
+          return HtmlService.createHtmlOutput(`<script>window.location='${url}'</script>`);
+        }
+      }
+
+      return HtmlService.createHtmlOutput("🛑 Invalid credentials. Please check your code.");
+
+    default:
+      return HtmlService.createHtmlOutput("🛑 Unknown view: " + view);
   }
-
+}
   // 🌼 Serve seeker data from Users sheet
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Users');
   const data = [];
