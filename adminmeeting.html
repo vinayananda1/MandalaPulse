@@ -27,6 +27,24 @@
           </td>
         `;
         table.appendChild(row);
+
+        <h3>➕ Schedule New Meeting</h3>
+
+<label>Date</label>
+<input type="date" id="date">
+
+<label>Time</label>
+<input type="time" id="time">
+
+<label>Topic</label>
+<input type="text" id="topic" placeholder="e.g., Invocation Rituals">
+
+<label>Host</label>
+<input type="text" id="host" placeholder="e.g., Swami Vinayananda">
+
+<button onclick="submitMeeting()">📧 Schedule & Send Email</button>
+
+<div id="status"></div>
       });
     }
 
