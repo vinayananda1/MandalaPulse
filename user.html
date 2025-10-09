@@ -1,20 +1,44 @@
+<!-- Invocation Scroll: user.html -->
+<!-- Purpose: Display meeting link or symbolic affirmation -->
+<!-- Compatibility: Modern browsers -->
+<!-- Lineage: Reached via login.html for known users -->
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <base target="_top">
-    <style>
-      body {
-        font-family: sans-serif;
-        background-color: #e6f7ff;
-        text-align: center;
-        padding-top: 80px;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>🌿 Seeker Chamber</h2>
-    <p>Welcome, <strong>Devi Harada</strong>.</p>
-    <p>Your session awaits. Prepare to engage with MandalaPulse.</p>
-    <p>Affirmation logs and symbolic flows will guide your journey.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Portal — MandalaPulse</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding: 50px;
+    }
+    .link-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="link-box">
+    <h2>Welcome, Confirmed User</h2>
+    <p>Your meeting link is ready:</p>
+    <a href="https://meet.google.com/your-meeting-code" target="_blank">Join MandalaPulse Meeting</a>
+    <p style="margin-top: 20px; color: gray;">Please join 5 minutes early and observe silence before entry.</p>
+  </div>
+</body>
 </html>
