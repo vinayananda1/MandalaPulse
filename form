@@ -46,7 +46,9 @@
 
   <p id="loginStatus"></p>
   <p id="timestamp"></p>
-<form method="GET" action="YOUR_SCRIPT_URL?view=validate">
+
+  
+<form method="GET" action="https://script.google.com/macros/s/AKfycbwWER1ihzpmt58VRyHu-K8m9AflUOFQ_nnRBYO_SobwxrHk_D-OtAKMaCbAw3ks0uA7uA/exec">
   <input type="text" name="username" placeholder="Username">
   <input type="password" name="password" placeholder="Password">
   <button type="submit">Login</button>
