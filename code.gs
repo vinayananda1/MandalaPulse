@@ -1,9 +1,45 @@
 // 🌼 Serve seeker data to login.html
+
+
 function doGet(e) {
   const view = e && e.parameter && e.parameter.view ? e.parameter.view : "login";
-  const username = e && e.parameter && e.parameter.username ? e.parameter.username : "";
-  const password = e && e.parameter && e.parameter.password ? e.parameter.password : "";
+  const email = e && e.parameter && e.parameter.email ? e.parameter.email.trim() : "";
+  const password = e && e.parameter && e.parameter.password ? e.parameter.password.trim() : "";
 
+  Logger.log("🔍 View: " + view);
+  Logger.log("📩 Email: " + email);
+  Logger.log("🔐 Password: " + password);
+
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Users");
+    if (!sheet) {
+      Logger.log("🛑 Sheet 'Users' not found.");
+      return HtmlService.createHtmlOutput("🛑 Sheet 'Users' not found.");
+    }
+
+    const data = sheet.getDataRange().getValues();
+    Logger.log("📊 Rows retrieved: " + data.length);
+
+    for (let i = 1; i < data.length; i++) {
+      const sheetEmail = data[i][0].toString().trim();
+      const sheetPassword = data[i][1].toString().trim();
+
+      Logger.log(`🔍 Row ${i}: ${sheetEmail} / ${sheetPassword}`);
+
+      if (sheetEmail === email && sheetPassword === password) {
+        Logger.log("✅ Match found");
+
+        return HtmlService.createHtmlOutput("✅ Match found");
+      }
+    }
+
+    Logger.log("🛑 No match found");
+    return HtmlService.createHtmlOutput("🛑 Invalid credentials");
+  } catch (err) {
+    Logger.log("🔥 Error: " + err.message);
+    return HtmlService.createHtmlOutput("🔥 Error: " + err.message);
+  }
+}
   switch (view) {
     case "login":
       return HtmlService.createHtmlOutputFromFile("login");
