@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MandalaPulse Admin</title>
+  <title>MandalaPulse Admin Chamber</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff3e0, #fff);
-      padding: 40px;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #fff8e1;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: #f9f9f9;
+      padding: 20px;
     }
     h2 {
-      color: #6d4c41;
+      color: #4B0082;
     }
-    .info {
-      margin-bottom: 20px;
-      font-size: 16px;
+    .tab-bar {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
     }
-    .button {
+    .dropdown {
+      position: relative;
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #8d6e63;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-      margin-top: 10px;
     }
-    .button:hover {
-      background-color: #5d4037;
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: #333;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>🌼 Welcome, Admin</h2>
-    <div class="info">
-      <p><strong>Username:</strong> <span id="username"></span></p>
-      <p><strong>Invocation Code:</strong> <span id="code"></span></p>
-      <p><strong>Approved By:</strong> <span id="approved"></span></p>
+
+  <h2>Welcome, Admin</h2>
+  <p>Username: <?= username ?></p>
+  <p>Invocation Code: <?= code ?></p>
+  <p>Approved By: <?= approvedBy ?></p>
+
+  <div class="tab-bar">
+    <a href="q.html">🔮 Go to Meeting Chamber</a>
+
+    <div class="dropdown">
+      <span>🛠️ Manage</span>
+      <div class="dropdown-content">
+        <a href="users.html">👥 Users</a>
+        <a href="scrolls.html">📜 Scrolls</a>
+        <a href="newuser.html">➕ New Users</a>
+        <a href="schedule.html">🗓️ Scheduling</a>
+      </div>
     </div>
-    <a href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit" class="button">📝 Manage Users</a>
-    <a href="https://github.com/vinayananda1/MandalaPulse" class="button">📜 View Scrolls</a>
-    <a href="q.html" class="button">🔮 Enter Next Chamber</a>
+
+    <a href="welcome.html">🌼 Return to Welcome</a>
+    <a href="logout.html">🚪 Logout</a>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById("username").textContent = params.get("username");
-    document.getElementById("code").textContent = params.get("code");
-    document.getElementById("approved").textContent = params.get("approved");
-  </script>
 </body>
 </html>
