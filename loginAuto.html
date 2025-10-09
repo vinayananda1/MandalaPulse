@@ -8,13 +8,18 @@
   <p id="status">🔍 Preparing invocation…</p>
 
   <script>
-    // 🌼 Extract username from URL parameter
+    // 🌼 Extract user parameter from URL
     const urlParams = new URLSearchParams(window.location.search);
     const email = urlParams.get("user");
-    const password = "auto"; // symbolic password or backend lookup
+    const password = "auto"; // symbolic password
 
     if (email) {
       document.getElementById("status").innerText = `🔐 Validating ${email}…`;
+
+      // ⏳ Fallback message if backend is slow or unreachable
+      setTimeout(() => {
+        document.getElementById("status").innerText += "\n⏳ Still waiting… If nothing happens, backend may be unreachable.";
+      }, 3000);
 
       // 🧘 Invoke backend validation
       google.script.run.withSuccessHandler(function(response) {
