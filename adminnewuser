@@ -2,9 +2,45 @@
 <html>
 <head>
   <title>➕ Add New User</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input { width: 300px; padding: 6px; margin-top: 4px; }
+    button { margin-top: 20px; padding: 8px 16px; }
+    #status { margin-top: 20px; font-weight: bold; }
+  </style>
+  <script>
+    function submitUser() {
+      const userData = {
+        Name: document.getElementById("name").value.trim(),
+        Email: document.getElementById("email").value.trim().toLowerCase(),
+        Role: document.getElementById("role").value.trim(),
+        Status: document.getElementById("statusField").value.trim()
+      };
+
+      google.script.run.withSuccessHandler(function(response) {
+        document.getElementById("status").innerText = response;
+      }).addNewUser(userData);
+    }
+  </script>
 </head>
 <body>
   <h2>➕ Add New User</h2>
-  <p>This chamber allows admins to add new users to the sacred sheet.</p>
+
+  <label for="name">Name</label>
+  <input type="text" id="name" placeholder="Enter full name">
+
+  <label for="email">Email</label>
+  <input type="email" id="email" placeholder="Enter email address">
+
+  <label for="role">Role</label>
+  <input type="text" id="role" placeholder="e.g., Admin, Guest">
+
+  <label for="statusField">Status</label>
+  <input type="text" id="statusField" placeholder="e.g., Approved, Pending">
+
+  <button onclick="submitUser()">➕ Submit</button>
+
+  <div id="status"></div>
 </body>
 </html>
