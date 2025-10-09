@@ -68,7 +68,22 @@ function getAllMeetings() {
   }
   return meetings;
 }
+function routeUser() {
+  const role = document.getElementById('role').value;
+  const username = document.getElementById('username').value;
 
+  alert("Welcome, " + username);
+
+  if (role === "guest") {
+    window.location.href = "guest.html";
+  } else if (role === "user") {
+    window.location.href = "user.html";
+  } else if (role === "admin") {
+    window.location.href = "adminscrolls.html";
+  } else {
+    alert("Please select a valid role.");
+  }
+}
 // ➕ Add new meeting and send emails
 function addMeeting(meetingData) {
   const sheet = SpreadsheetApp.openById("1xtDZsPH-cAHeudQNXkmYkJtXxlwxpWacEdgPF2uYiiE").getSheetByName("Meetings");
