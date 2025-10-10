@@ -80,7 +80,7 @@ document.getElementById("guestForm").addEventListener("submit", function(e) {
     place: document.getElementById("place").value
   };
 
-  fetch("YOUR_SCRIPT_URL", {
+  fetch("https://script.google.com/macros/s/AKfycbzilNMyaZH_sVcGKERDATqS5lGFmOQ_PP74sC-flnbm8QjMq95XZqe_XmOIK1yPuAVM/exec", {
     method: "POST",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" }
