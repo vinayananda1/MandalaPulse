@@ -1,4 +1,4 @@
-<!-- 🪷 MandalaPulse Login Scroll with Backend Invocation -->
+<!-- 🪷 MandalaPulse Login Scroll -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,40 +60,17 @@
 
     // 🪷 Login Submission Logic
     document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission
 
-      const data = {
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value
-      };
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      fetch("https://script.google.com/macros/s/AKfycbzilNMyaZH_sVcGKERDATqS5lGFmOQ_PP74s/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value
-  }),
-  headers: { "Content-Type": "application/json" }
-})
-.then(res => res.text())
-.then(text => {
-  alert("Raw response: " + text); // 🪷 Shows exactly what the backend returns
-  try {
-    const response = JSON.parse(text);
-    if (response.status === "success") {
-      localStorage.setItem("guestName", response.name || "Guest");
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Login failed: " + (response.message || "Invalid credentials"));
-    }
-  } catch (err) {
-    alert("Response not JSON: " + err.message);
-  }
-})
-.catch(err => alert("Error during login: " + err.message));
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
 
-    });
-  </script>
-
-</body>
-</html>
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content
