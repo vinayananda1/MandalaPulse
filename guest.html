@@ -57,7 +57,39 @@
       e.preventDefault();
       const name = document.getElementById("guestName").value;
       const email = document.getElementById("guestEmail").value;
+<form id="guestForm">
+  <!-- Your input fields -->
+  <input type="text" id="name" name="name" required>
+  <input type="password" id="password" name="password" required>
+  <input type="email" id="email" name="email" required>
+  <input type="text" id="address" name="address">
+  <input type="text" id="place" name="place">
+  <button type="submit">Submit</button>
+</form>
 
+<!-- 🪷 Invocation Script -->
+<script>
+document.getElementById("guestForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    password: document.getElementById("password").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    place: document.getElementById("place").value
+  };
+
+  fetch("YOUR_SCRIPT_URL", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.text())
+  .then(msg => alert("Thank you, your request has been sent."))
+  .catch(err => alert("Error submitting form."));
+});
+</script>
       // Symbolic confirmation (manual phase)
       document.getElementById("confirmationMessage").innerText =
         "Thank you, " + name + ". Your request has been sent to the admin.";
