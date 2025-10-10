@@ -57,7 +57,7 @@
         place: document.getElementById("place").value
       };
 
-      fetch("YOUR_SCRIPT_URL", {
+      fetch("https://script.google.com/macros/s/AKfycbzilNMyaZH_sVcGKERDATqS5lGFmOQ_PP74s/exec", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
