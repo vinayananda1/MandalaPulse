@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<HEAD
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MandalaPulse Dashboard</title>
@@ -40,10 +41,52 @@
     }
     .logout-button:hover {
       background-color: #6A0DAD;
+=======
+  <meta charset="UTF-8">
+  <title>MandalaPulse Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f5f7fa;
+      padding: 2em;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #4CAF50;
+      margin-bottom: 1em;
+    }
+    p {
+      font-size: 1.2em;
+      color: #333;
+    }
+    button {
+      margin-top: 2em;
+      padding: 0.75em 2em;
+      font-size: 1em;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: #888;
+    04f055a8d1294080310532b15327c04d5c38e061
     }
   </style>
 </head>
 <body>
+<HEAD></HEAD>
   <div class="container">
     <h1>🪷 Welcome to MandalaPulse</h1>
     <p>Your invocation was successful.<br>May your actions today be aligned and clear.</p>
@@ -53,6 +96,32 @@
   <script>
     function logout() {
       // Redirect to login scroll
+=======
+
+  <div class="container">
+    <h1 id="welcomeMessage">🪷 Welcome</h1>
+    <p>Your invocation is complete. You may now proceed with your MandalaPulse journey.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <footer>
+    Invocation Timestamp: <span id="timestamp"></span>
+  </footer>
+
+  <script>
+    // 🪷 Retrieve guest name from localStorage
+    const guestName = localStorage.getItem("guestName") || "guest";
+    document.getElementById("welcomeMessage").textContent = `🪷 Welcome, ${guestName}`;
+
+    // 🪷 Timestamp Invocation
+    document.getElementById("timestamp").textContent = new Date().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata"
+    });
+
+    // 🪷 Logout Ritual
+    function logout() {
+      localStorage.removeItem("guestName");
+     04f055a8d1294080310532b15327c04d5c38e061
       window.location.href = "login.html";
     }
   </script>

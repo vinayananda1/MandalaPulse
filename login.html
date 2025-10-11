@@ -1,24 +1,99 @@
-<script>
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+<!-- 🪷 MandalaPulse Login Scroll with Backend Invocation -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      background-color: #f0f4f8;
+    }
+    form {
+      background: white;
+      padding: 2em;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+      padding: 0.75em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  <form id="loginForm">
+    <input type="email" id="email" name="email" placeholder="Email" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
 
-  const url = `https://script.google.com/macros/s/AKfycbwWSi0nTJloTON5pX1N2RMJ14TJSj7xRlyltjbjaiUkMY6ExgPk_78tTBrK9USWLj-MGA/exec/exec?username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+  <footer>
+    🪷 Invocation Timestamp: <span id="timestamp"></span>
+  </footer>
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        alert("Welcome, " + data.name);
-      } else {
-        alert("Login failed");
-      }
-    })
-    .catch(error => {
-      console.error("Invocation error:", error);
-      alert("Invocation failed");
+  <script>
+    // 🪷 Timestamp Invocation
+    document.getElementById("timestamp").textContent = new Date().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata"
     });
-});
-</script>
+
+    // 🪷 Login Submission Logic
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzilNMyaZH_sVcGKERDATqS5lGFmOQ_PP74s/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value
+  }),
+  headers: { "Content-Type": "application/json" }
+})
+.then(res => res.text())
+.then(text => {
+  alert("Raw response: " + text); // 🪷 Shows exactly what the backend returns
+  try {
+    const response = JSON.parse(text);
+    if (response.status === "success") {
+      localStorage.setItem("guestName", response.name || "Guest");
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Login failed: " + (response.message || "Invalid credentials"));
+    }
+  } catch (err) {
+    alert("Response not JSON: " + err.message);
+  }
+})
+.catch(err => alert("Error during login: " + err.message));
+
+    });
+  </script>
+
+</body>
+</html>
