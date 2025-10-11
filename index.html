@@ -41,37 +41,29 @@
   <button onclick="login()">Enter Mandala</button>
 
   <script>
-    function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      if (!email || !password) {
-        alert("Please enter both email and mantra.");
-        return;
-      }
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-      const payload = { email, password };
+    const url = `https://script.google.com/macros/s/AKfycbwWSi0nTJloTON5pX1N2RMJ14TJSj7xRlyltjbjaiUkMY6ExgPk_78tTBrK9USWLj-MGA/exec?username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
-      fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         if (data.status === "success") {
-          alert(data.message);
-          window.location.href = data.redirect;
+          localStorage.setItem("username", data.name.trim());
+          window.location.href = "dashboard.html";
         } else {
-          alert("Access denied: " + data.message);
+          alert("Login failed: " + data.message);
         }
       })
       .catch(error => {
-        alert("Login failed. Please check the scroll.");
-        console.error("Error:", error);
+        console.error("Invocation error:", error);
+        alert("Invocation failed. Please check the scroll.");
       });
-    }
-  </script>
-
+  });
+</script>
 </body>
 </html>
